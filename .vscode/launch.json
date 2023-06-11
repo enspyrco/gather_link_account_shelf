@@ -1,0 +1,10 @@
+{
+  "configurations": [
+    {
+      "name": "gather_link_account_shelf",
+      "request": "launch",
+      "type": "dart",
+      "program": "bin/server.dart"
+    }
+  ]
+}
