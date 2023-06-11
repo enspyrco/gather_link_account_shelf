@@ -4,10 +4,8 @@ import 'package:gather_link_account_shelf/config/secret.dart';
 import 'package:http/http.dart' as http;
 import 'package:shelf/shelf.dart' show Request, Response;
 
-// https://gather-link-account-shelf-eogj3aa7na-uc.a.run.app/github/?code=a3ba08bbee674a21a85b&state=lvr_W0cxHHezXKDDhMnT7zbGTGVmGtoTjiB_-OYVNAU%3D
-
 Future<Response> githubHandler(Request request) async {
-  String? nonce, code, githubUsername;
+  String? nonce, code;
 
   try {
     nonce = request.url.queryParameters['state']!;
@@ -30,14 +28,6 @@ Future<Response> githubHandler(Request request) async {
     var decodedTokenResponse =
         jsonDecode(utf8.decode(tokenResponse.bodyBytes)) as Map;
     var accessToken = decodedTokenResponse['access_token'] as String;
-
-    // // Use the github API to get the username
-    // var userResponse = await http.get(
-    //     Uri(scheme: 'https', host: 'api.github.com', path: 'user'),
-    //     headers: {'Authorization': 'token $accessToken'});
-    // var decodedUserResponse =
-    //     jsonDecode(utf8.decode(userResponse.bodyBytes)) as Map;
-    // githubUsername = decodedUserResponse['login'] as String;
 
     return Response.movedPermanently(
         'https://gather-identity-link.web.app/github?token=$accessToken');
